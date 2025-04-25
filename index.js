@@ -31,7 +31,7 @@ app.get('/debug', (req, res) => {
     });
 });
 
-app.get('/get-token', (req, res) => {
+app.get('/get-token', async (req, res) => {
     const { room, username } = req.query;
 
     console.log(`Token request for room: ${room}, username: ${username}`);
@@ -63,9 +63,14 @@ app.get('/get-token', (req, res) => {
             canSubscribe: true,
         });
 
-        const jwt = token.toJwt();
-        console.log(`Token generated successfully for ${username}`);
-        res.json({ token: jwt });
+        try {
+            const jwt = await token.toJwt();
+            console.log(`Token generated successfully for ${username}`);
+            res.json({ token: jwt });
+        } catch (tokenError) {
+            console.error('Error generating JWT:', tokenError);
+            res.status(500).json({ error: 'Failed to generate JWT', details: tokenError.message });
+        }
     } catch (error) {
         console.error('Error generating token:', error);
         res.status(500).json({ error: 'Failed to generate token', details: error.message });
