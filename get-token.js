@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // Configuration - change these values as needed
-const room = "test-room";
+const room = "test";
 const identity = "test-user";
 
 // Load API credentials from .env
