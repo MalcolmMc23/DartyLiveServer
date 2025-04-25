@@ -22,6 +22,7 @@ if (!apiKey || !apiSecret) {
 const token = new AccessToken(apiKey, apiSecret, {
     identity,
     name: identity,
+    ttl: '24h' // Set explicit TTL for 24 hours
 });
 
 token.addGrant({
@@ -41,8 +42,8 @@ token.toJwt().then(jwt => {
     console.log(jwt);
     console.log('\n========== HOW TO USE ==========');
     console.log('1. Copy this token and use it in your App.tsx');
-    console.log('2. Make sure your room name matches in App.tsx');
-    console.log('3. The token will expire in 24 hours by default');
+    console.log('2. Make sure the room name in App.tsx is set to: "test-room"');
+    console.log('3. Make sure your LiveKit URL is correct: wss://dartylive-1nnf5818.livekit.cloud');
 }).catch(error => {
     console.error('Error generating token:', error);
 }); 
